@@ -1,0 +1,7 @@
+{
+  "lint": false,
+  "output": "queries.ksql",
+  "queriesPath": "./queries/",
+  "replacements": {"with/partitions":3},
+  "topics": ["order_total"]
+}

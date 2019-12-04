@@ -1,0 +1,9 @@
+CREATE STREAM users (
+    id BIGINT,
+    name VARCHAR,
+    email STRING)
+WITH (KAFKA_TOPIC = 'users-in',
+      VALUE_FORMAT='JSON',
+      TIMESTAMP='rawTime',
+      TIMESTAMP_FORMAT='yyyy-MM-dd''T''HH:mm:ss.SSSz',
+      KEY = 'id');

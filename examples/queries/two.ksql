@@ -1,0 +1,13 @@
+--- example debug query, this will not be in the output
+SELECT order_id, email FROM orders_users LIMIT 5;
+--- the actual query we will use
+CREATE STREAM orders_users WITH (VALUE_FORMAT='AVRO') 
+AS SELECT 
+        o.id AS order_id,
+        u.name AS user_name,
+        u.email AS email,
+        o.item AS item_name,
+        o.quantity AS quantity
+    FROM
+        orders o
+        JOIN users u ON (o.user = u.id);

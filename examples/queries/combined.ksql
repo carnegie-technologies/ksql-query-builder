@@ -1,0 +1,11 @@
+CREATE TABLE order_total WITH (VALUE_FORMAT='AVRO',PARTITIONS=1)
+AS SELECT 
+        u.order_id AS order_id,
+        u.user_name AS username,
+        u.email AS email,
+        i.price * u.quantity AS total
+    FROM
+        orders_users u
+        LEFT JOIN orders_items i ON (u.order_id = i.order_id)
+    GROUP BY u.order_id
+;

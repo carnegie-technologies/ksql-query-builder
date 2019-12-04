@@ -1,0 +1,9 @@
+CREATE STREAM items (
+    time VARCHAR,
+    name VARCHAR,
+    price BIGINT)
+WITH (KAFKA_TOPIC = 'items-in',
+      VALUE_FORMAT='JSON',
+      TIMESTAMP='rawTime',
+      TIMESTAMP_FORMAT='yyyy-MM-dd''T''HH:mm:ss.SSSz',
+      KEY = 'id');

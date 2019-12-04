@@ -1,0 +1,10 @@
+CREATE STREAM orders_users WITH (VALUE_FORMAT='AVRO') 
+AS SELECT 
+        o.id AS order_id,
+        u.name AS user_name,
+        u.email AS email,
+        o.item AS item_name,
+        o.quantity AS quantity
+    FROM
+        orders o
+        JOIN users u ON (o.user = u.id);

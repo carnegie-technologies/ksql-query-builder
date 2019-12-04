@@ -1,0 +1,10 @@
+{
+    "replacements": {
+        "time zone": "'Europe/London'",
+        "with/partitions": 2,
+        "function/timestamptostring/tz": "'US/West'"
+    },
+    "topics": [
+        "order_total"
+    ]
+}

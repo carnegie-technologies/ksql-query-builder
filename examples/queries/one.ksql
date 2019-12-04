@@ -1,0 +1,8 @@
+CREATE STREAM orders_items WITH (VALUE_FORMAT='AVRO') 
+AS SELECT 
+        o.id AS order_id,
+        i.price AS item_price 
+    FROM 
+        orders o
+        JOIN items i ON (o.itemname=i.name)
+;

@@ -1,0 +1,10 @@
+CREATE STREAM orders (
+    id BIGINT,
+    user BIGINT,
+    item STRING,
+    quantity INTEGER)
+WITH (KAFKA_TOPIC = 'orders-in',
+      VALUE_FORMAT='JSON',
+      TIMESTAMP='rawTime',
+      TIMESTAMP_FORMAT='yyyy-MM-dd''T''HH:mm:ss.SSSz',
+      KEY = 'id');

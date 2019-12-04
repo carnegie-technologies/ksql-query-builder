@@ -1,0 +1,11 @@
+--- create hourly sales numbers
+CREATE TABLE hourly_sales WITH (VALUE_FORMAT='AVRO',PARTITIONS=1)
+AS SELECT 
+        COUNT(*) AS orders,
+        SUM(i.price * o.quantity) AS total_sales
+    FROM 
+        orders o
+        JOIN items i ON (o.itemname=i.name)
+    WINDOW HOPPING (SIZE 1 HOUR, ADVANCE BY 1 HOUR)
+    GROUP BY o.id
+;

@@ -1,0 +1,5 @@
+{
+  "queriesPath": "./queries/",
+  "replacements": {"with/partitions":1},
+  "topics": ["order_total"]
+}

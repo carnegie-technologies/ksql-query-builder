@@ -1,0 +1,81 @@
+--- queries generated on 2019-12-05T19:04:06.870Z
+--- from file: queries/item-root.ksql  statement: 1
+CREATE STREAM items(
+      time VARCHAR,
+      name VARCHAR,
+      price BIGINT)
+    WITH(
+      KAFKA_TOPIC='items-in',
+      VALUE_FORMAT='AVRO',
+      TIMESTAMP='rawTime',
+      TIMESTAMP_FORMAT='yyyy-MM-dd''T''HH:mm:ss.SSSz',
+      KEY='id');
+--- from file: queries/order-root.ksql  statement: 1
+CREATE STREAM orders(
+      id BIGINT,
+      user BIGINT,
+      item STRING,
+      quantity INTEGER)
+    WITH(
+      KAFKA_TOPIC='orders-in',
+      VALUE_FORMAT='AVRO',
+      TIMESTAMP='rawTime',
+      TIMESTAMP_FORMAT='yyyy-MM-dd''T''HH:mm:ss.SSSz',
+      KEY='id');
+--- from file: queries/hourly-sales.ksql  statement: 1
+CREATE TABLE hourly_sales
+    WITH(
+      VALUE_FORMAT='AVRO',
+      PARTITIONS=2) AS
+  SELECT
+      COUNT(*) AS orders,
+      SUM(i.price * o.quantity) AS total_sales
+    FROM orders o  JOIN
+        items i ON(o.itemname=i.name)
+    WINDOW HOPPING(SIZE 1 HOUR, ADVANCE BY 1 HOUR)
+    GROUP BY o.id;
+--- from file: queries/one.ksql  statement: 1
+CREATE STREAM orders_items
+    WITH(
+      VALUE_FORMAT='AVRO') AS
+  SELECT
+      o.id AS order_id,
+      i.price AS item_price
+    FROM orders o  JOIN
+        items i ON(o.itemname=i.name);
+--- from file: queries/user-root.ksql  statement: 1
+CREATE STREAM users(
+      id BIGINT,
+      name VARCHAR,
+      email STRING)
+    WITH(
+      KAFKA_TOPIC='users-in',
+      VALUE_FORMAT='AVRO',
+      TIMESTAMP='rawTime',
+      TIMESTAMP_FORMAT='yyyy-MM-dd''T''HH:mm:ss.SSSz',
+      KEY='id');
+--- from file: queries/two.ksql  statement: 2
+CREATE STREAM orders_users
+    WITH(
+      VALUE_FORMAT='AVRO') AS
+  SELECT
+      o.id AS order_id,
+      u.name AS user_name,
+      u.email AS email,
+      o.item AS item_name,
+      o.quantity AS quantity
+    FROM orders o  JOIN
+        users u ON(o.user=u.id);
+--- from file: queries/combined.ksql  statement: 1
+CREATE TABLE order_total
+    WITH(
+      VALUE_FORMAT='AVRO',
+      PARTITIONS=2) AS
+  SELECT
+      u.order_id AS order_id,
+      u.user_name AS username,
+      u.email AS email,
+      i.price * u.quantity AS total
+    FROM orders_users u LEFT JOIN
+        orders_items i ON(u.order_id=i.order_id)
+    GROUP BY u.order_id;

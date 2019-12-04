@@ -1,0 +1,15 @@
+{
+  "lint": false,
+  "output": "queries.ksql",
+  "queriesPath": "./queries/",
+  "replacements": {
+    "TIME ZONE": "'UTC'",
+    "FUNCTION/TIMESTAMPTOSTRING/TZ": "'Europe/London'",
+    "with/value_format": "'AVRO'",
+    "with/partitions": 2
+  },
+  "topics": [
+      "order_total",
+      "hourly_sales"
+  ]
+}

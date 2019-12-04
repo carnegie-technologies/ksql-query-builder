@@ -1,0 +1,3 @@
+CREATE STREAM pageviews (viewtime BIGINT, user_id VARCHAR, page_id VARCHAR, `Properties` VARCHAR>)
+  WITH (VALUE_FORMAT = 'JSON',
+        KAFKA_TOPIC = 'my-pageviews-topic');

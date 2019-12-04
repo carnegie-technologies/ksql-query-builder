@@ -1,0 +1,46 @@
+{
+    "name": "ksql-query-builder",
+    "version": "1.0.0",
+    "bin": "src/app.js",
+    "main": "src/main.js",
+    "sideEffects": false,
+    "license": "Apache-2.0",
+    "engines": { 
+        "node": ">=12.0" 
+    },
+    "scripts": {
+        "lint": "eslint . --fix",
+        "test": "nyc mocha --reporter spec",
+        "bundle": "webpack-cli",
+        "generate": "node ./src/app.js",
+        "grammar": "cd src/parser; antlr4 -Dlanguage=JavaScript SqlBase.g4 && rm *.tokens *.interp"
+    },
+    "mocha": {
+        "spec": "src/tests/**/*.spec.js",
+        "reporter": "mocha-junit-reporter"
+    },
+    "nyc": {
+        "reporter": [
+            "text",
+            "html"
+        ],
+        "check-coverage": true,
+        "lines": 70,
+        "statements": 70
+    },
+    "devDependencies": {
+        "capture-console": "^1.0.1",
+        "eslint": "^5.16.0",
+        "eslint-config-recommended": "^4.0.0",
+        "expect.js": "^0.3.1",
+        "mocha": "^6.1.4",
+        "mocha-junit-reporter": "^1.22.0",
+        "nyc": "^14.1.0",
+        "webpack": "^4.36.1",
+        "webpack-cli": "^3.3.6"
+    },
+    "dependencies": {
+        "antlr4": "^4.7.2",
+        "convict": "^4.4.1"
+    }
+}
