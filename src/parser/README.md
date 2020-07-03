@@ -16,7 +16,7 @@ all work without errors only that they are syntactically correct according to th
 
 ## Updates
 to update the grammar grab the latest version of SqlBase.g4 from the
-[ksql source](https://github.com/confluentinc/ksql/blob/master/ksql-parser/src/main/antlr4/io/confluent/ksql/parser/SqlBase.g4)
+[ksql source](https://github.com/confluentinc/ksql/blob/master/ksqldb-parser/src/main/antlr4/io/confluent/ksql/parser/SqlBase.g4)
 and place it in this directory. 
 
 run antlr4:
