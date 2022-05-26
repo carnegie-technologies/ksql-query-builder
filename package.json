@@ -41,6 +41,6 @@
     },
     "dependencies": {
         "antlr4": "^4.7.2",
-        "convict": "^4.4.1"
+        "convict": "^6.2.3"
     }
 }
